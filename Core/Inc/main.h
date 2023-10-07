@@ -60,7 +60,7 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define onboard_led_Pin GPIO_PIN_13
 #define onboard_led_GPIO_Port GPIOC
-#define eye1_led_Pin GPIO_PIN_10
+#define eye1_led_Pin GPIO_PIN_12
 #define eye1_led_GPIO_Port GPIOB
 #define eye2_led_Pin GPIO_PIN_11
 #define eye2_led_GPIO_Port GPIOB

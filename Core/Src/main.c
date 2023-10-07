@@ -4,11 +4,14 @@
 #include "usart.h"
 #include "gpio.h"
 
-#include "ssd1306.h"
+//#include "ssd1306.h"
 #include "stdio.h"
 
 
 void SystemClock_Config(void);
+
+void led_blinc_light(int time);
+void led_blinc_dark(int time);
 
 int main(void)
 {
@@ -25,6 +28,7 @@ int main(void)
 	ssd1306_Init();
 	HAL_Delay(100);
 
+	/*
 	ssd1306_Fill(White);
 	ssd1306_UpdateScreen();
 	HAL_Delay(100);
@@ -40,6 +44,7 @@ int main(void)
 	ssd1306_WriteString("           ", Font_11x18, White);
 	ssd1306_UpdateScreen();
 	HAL_Delay(1000);
+	//*/
 
 
 	HAL_GPIO_WritePin(onboard_led_GPIO_Port, onboard_led_Pin, GPIO_PIN_SET);
@@ -50,82 +55,28 @@ int main(void)
 
 	while (1)
 	{
-		HAL_GPIO_WritePin(onboard_led_GPIO_Port, onboard_led_Pin, GPIO_PIN_SET);
-		HAL_Delay(500);
-		HAL_GPIO_WritePin(onboard_led_GPIO_Port, onboard_led_Pin, GPIO_PIN_RESET);
-		HAL_Delay(500);
+		//HAL_GPIO_WritePin(onboard_led_GPIO_Port, onboard_led_Pin, GPIO_PIN_SET);
+		//HAL_Delay(500);
+		//HAL_GPIO_WritePin(onboard_led_GPIO_Port, onboard_led_Pin, GPIO_PIN_RESET);
+		//HAL_Delay(500);
+
+		int i;
+		for(i=0; i<7; i++)
+		{
+			led_blinc_light(30);
+			HAL_Delay(30);
+		}
+		led_blinc_light(100);
+		HAL_Delay(50);
+		led_blinc_light(300);
+		HAL_Delay(50);
+		led_blinc_light(500);
+		HAL_Delay(200);
+		led_blinc_light(700);
+
+		HAL_Delay(5000);
 
 		seconds_counter++;
-
-		if(seconds_counter%11 == 0)  // eyes blink
-		{
-			HAL_GPIO_WritePin(GPIOB, eye1_led_Pin|eye2_led_Pin, GPIO_PIN_RESET);
-			HAL_Delay(30);
-			HAL_GPIO_WritePin(GPIOB, eye1_led_Pin|eye2_led_Pin, GPIO_PIN_SET);
-			HAL_Delay(30);
-			HAL_GPIO_WritePin(GPIOB, eye1_led_Pin|eye2_led_Pin, GPIO_PIN_RESET);
-			HAL_Delay(30);
-			HAL_GPIO_WritePin(GPIOB, eye1_led_Pin|eye2_led_Pin, GPIO_PIN_SET);
-			HAL_Delay(300);
-
-			ssd1306_SetCursor(0,0);
-			ssd1306_WriteString("Privet     ", Font_11x18, White);
-			ssd1306_SetCursor(0,22);
-			ssd1306_WriteString("Gleb       ", Font_11x18, White);
-			ssd1306_SetCursor(0,44);
-			ssd1306_WriteString("           ", Font_11x18, White);
-			ssd1306_UpdateScreen();
-			HAL_Delay(2000);
-
-			ssd1306_SetCursor(0,0);
-			ssd1306_WriteString("Ya tvoi    ", Font_11x18, White);
-			ssd1306_UpdateScreen();
-			ssd1306_SetCursor(0,22);
-			ssd1306_WriteString("           ", Font_11x18, White);
-			ssd1306_SetCursor(0,44);
-			ssd1306_WriteString("           ", Font_11x18, White);
-			ssd1306_UpdateScreen();
-			HAL_Delay(1500);
-			ssd1306_SetCursor(0,22);
-			ssd1306_WriteString("ROBOT      ", Font_11x18, White);
-			ssd1306_SetCursor(0,44);
-			ssd1306_WriteString("GIGANT     ", Font_11x18, White);
-			ssd1306_UpdateScreen();
-
-
-		}
-
-		if(seconds_counter%17 == 0)  // eyes blink
-		{
-			HAL_GPIO_WritePin(GPIOB, eye1_led_Pin, GPIO_PIN_RESET);
-			HAL_Delay(1500);
-			HAL_GPIO_WritePin(GPIOB, eye1_led_Pin, GPIO_PIN_SET);
-			HAL_Delay(500);
-			HAL_GPIO_WritePin(GPIOB, eye1_led_Pin|eye2_led_Pin, GPIO_PIN_RESET);
-			HAL_Delay(30);
-			HAL_GPIO_WritePin(GPIOB, eye1_led_Pin|eye2_led_Pin, GPIO_PIN_SET);
-			HAL_Delay(30);
-			HAL_GPIO_WritePin(GPIOB, eye1_led_Pin|eye2_led_Pin, GPIO_PIN_RESET);
-			HAL_Delay(30);
-			HAL_GPIO_WritePin(GPIOB, eye1_led_Pin|eye2_led_Pin, GPIO_PIN_SET);
-		}
-
-		if(seconds_counter%47 == 0)  // eyes blink
-		{
-			HAL_GPIO_WritePin(GPIOB, eye2_led_Pin, GPIO_PIN_RESET);
-			HAL_Delay(1500);
-			HAL_GPIO_WritePin(GPIOB, eye2_led_Pin, GPIO_PIN_SET);
-			HAL_Delay(500);
-			HAL_GPIO_WritePin(GPIOB, eye1_led_Pin|eye2_led_Pin, GPIO_PIN_RESET);
-			HAL_Delay(30);
-			HAL_GPIO_WritePin(GPIOB, eye1_led_Pin|eye2_led_Pin, GPIO_PIN_SET);
-			HAL_Delay(30);
-			HAL_GPIO_WritePin(GPIOB, eye1_led_Pin|eye2_led_Pin, GPIO_PIN_RESET);
-			HAL_Delay(30);
-			HAL_GPIO_WritePin(GPIOB, eye1_led_Pin|eye2_led_Pin, GPIO_PIN_SET);
-		}
-
-
 	}
 }
 
@@ -200,4 +151,14 @@ void assert_failed(uint8_t *file, uint32_t line)
 }
 #endif /* USE_FULL_ASSERT */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+void led_blinc_light(int time)
+{
+	HAL_GPIO_WritePin(eye1_led_GPIO_Port, eye1_led_Pin, GPIO_PIN_SET);
+	HAL_Delay(time);
+	HAL_GPIO_WritePin(eye1_led_GPIO_Port, eye1_led_Pin, GPIO_PIN_RESET);
+}
+void led_blinc_dark(int time)
+{
+	HAL_Delay(time);
+}
