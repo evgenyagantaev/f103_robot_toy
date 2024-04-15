@@ -74,9 +74,37 @@ int main(void)
 		HAL_Delay(200);
 		led_blinc_light(700);
 
-		HAL_Delay(5000);
+		HAL_Delay(13000);
+		led_blinc_light(700);
 
-		seconds_counter++;
+		HAL_Delay(7000);
+		led_blinc_light(700);
+		HAL_Delay(200);
+		led_blinc_light(500);
+		HAL_Delay(50);
+		led_blinc_light(300);
+		HAL_Delay(50);
+		led_blinc_light(100);
+
+		HAL_Delay(13000);
+		for(i=0; i<11; i++)
+		{
+			led_blinc_light(30);
+			HAL_Delay(30);
+		}
+		HAL_Delay(200);
+		led_blinc_light(700);
+
+		HAL_Delay(23000);
+		led_blinc_light(100);
+		HAL_Delay(50);
+		led_blinc_light(300);
+		HAL_Delay(50);
+		led_blinc_light(500);
+		HAL_Delay(200);
+		led_blinc_light(700);
+
+		HAL_Delay(41000);
 	}
 }
 
